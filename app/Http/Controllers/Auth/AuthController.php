@@ -44,11 +44,8 @@ class AuthController extends Controller
 
             if (Auth::attempt($credentials, $remember_me)) {
                 $user = Auth::user();
-
-                if ($user->status === 'verified') {
-
                     // Check if the user account is activated
-                    if ($user->account_status === 'activated') {
+                    if ($user->account_status == 'activated') {
                         // Check if the user has the 'superadmin' role
                         if ($user->hasRole('employer')) {
                             return redirect()->route('employer.dashboard')->with('success', 'You have logging');
@@ -62,26 +59,78 @@ class AuthController extends Controller
                         Auth::logout();
                         return redirect()->back()->with('error', 'Your account is deactivated.');
                     }
-
-
-                }elseif($user->status == 'pending'){
-                    return redirect()->route('employer.employerverificationForm');
-                }
-                else {
-                    echo "Rejected Your Application";
-                }
-
-
             }
 
-
-
+            else {
+                return redirect()->back()->with('error', 'This credentials wrong please try again..');
+            }
 
         } catch (Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('status', $e->getMessage());
         }
     }
+
+
+
+
+
+
+    // public function loginPost(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'email' => ['required', 'string', 'email'],
+    //         'password' => ['required', 'string'],
+    //         'remember_me' => ['nullable', 'boolean'],
+    //     ]);
+
+    //     DB::beginTransaction();
+
+    //     try {
+
+    //         $credentials = $request->only('email', 'password');
+    //         $remember_me = $request->has('remember_me') ? true : false;
+
+    //         if (Auth::attempt($credentials, $remember_me)) {
+    //             $user = Auth::user();
+
+    //             // if ($user->status === 'verified') {
+
+    //                 // Check if the user account is activated
+    //                 if ($user->account_status === 'activated') {
+    //                     // Check if the user has the 'superadmin' role
+    //                     if ($user->hasRole('employer')) {
+    //                         return redirect()->route('employer.dashboard')->with('success', 'You have logging');
+    //                     } elseif ($user->hasRole('candidate')) {
+    //                         return redirect()->route('candidate.dashboard')->with('success', 'You have logging');
+    //                     } else {
+    //                         Auth::logout();
+    //                         return redirect()->back()->with('error', 'You do not have permission to access this page.');
+    //                     }
+    //                 } else {
+    //                     Auth::logout();
+    //                     return redirect()->back()->with('error', 'Your account is deactivated.');
+    //                 }
+
+
+    //             // }elseif($user->status == 'pending'){
+    //             //     return redirect()->route('employer.employerverificationForm');
+    //             // }
+    //             // else {
+    //             //     echo "Rejected Your Application";
+    //             // }
+
+
+    //         }
+
+
+
+
+    //     } catch (Exception $e) {
+    //         DB::rollBack();
+    //         return redirect()->back()->with('status', $e->getMessage());
+    //     }
+    // }
 
 
     // Candidate Register View

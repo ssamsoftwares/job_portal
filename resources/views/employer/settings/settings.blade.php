@@ -70,6 +70,7 @@
                                         <input type="hidden" name="email" value="{{auth()->user()->email ?? ''}}">
 
                                         <div class="row">
+                                            
                                             {{-- LOGO --}}
                                             <div class="col-lg-8 mt-lg-4">
                                                 <label for="">{{ 'Logo' }} <span

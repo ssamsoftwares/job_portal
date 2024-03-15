@@ -120,7 +120,15 @@
                         @endif
                     </span>
 
-                    <span class="user-name">{{ auth()->user()->name }}</span>
+
+                    @if (auth()->user()->hasRole('superadmin'))
+                        <span class="user-name">{{ auth()->user()->name }}</span>
+                    @elseif (auth()->user()->hasRole('employer'))
+                        <span class="user-name">{{ auth()->user()->company_name }}</span>
+                    @else
+                        <span class="user-name">{{ auth()->user()->name }}</span>
+                    @endif
+
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 
@@ -131,17 +139,18 @@
                         <a class="dropdown-item" href="{{ route('employer.profilePreview') }}"><i
                                 class="dw dw-user1"></i>
                             Profile</a>
-                            <a class="dropdown-item" href="{{ route('employer.settings') }}"><i
-                                class="dw settings2"></i>
+                        <a class="dropdown-item" href="{{ route('employer.settings') }}"><i class="dw dw-settings2"></i>
                             Settings</a>
                     @else
-                        <a class="dropdown-item" href="#"><i class="dw dw-user1"></i>
+                        <a class="dropdown-item" href="{{route('candidate.profilePreview')}}"><i class="dw dw-user1"></i>
                             Profile</a>
+
+                            <a class="dropdown-item" href="{{route('candidate.settings')}}"><i class="dw dw-settings2"></i>
+                                Settings</a>
                     @endif
 
                     <a class="dropdown-item" href="{{ route('logout') }}"
-                        onclick="return confirm('Are you sure logout this site!')"><i class="dw dw-logout"></i> Log
-                        Out</a>
+                        onclick="return confirm('Are you sure logout this site!')"><i class="dw dw-logout"></i> Log Out</a>
                 </div>
             </div>
         </div>

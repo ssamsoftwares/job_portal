@@ -46,22 +46,25 @@ return new class extends Migration
             $table->longText('other_social_media')->nullable();
 
             $table->longText('professional_title')->nullable();
+            $table->string('job_role')->nullable();
             $table->string('experience_level')->nullable();
+            $table->string('education_level')->nullable();
             $table->string('personal_website')->nullable();
             $table->string('dob')->nullable();
             $table->enum('gender',['female','male','other'])->nullable();
             $table->enum('marital_status',['single','married'])->nullable();
-            $table->string('profession')->nullable();
+            $table->string('profession_id')->nullable();
             $table->string('your_availability')->nullable();
-            $table->longText('skills')->nullable();
-            $table->longText('languages')->nullable();
+            $table->longText('skill')->nullable();
+            $table->longText('language_id')->nullable();
             $table->longText('biography')->nullable();
 
             $table->enum('employer_type',['company','individual'])->nullable();
             $table->enum('status',['pending','rejected','verified'])->nullable();
             $table->longText('status_reason')->nullable();
-            $table->enum('account_status',['activated','Deactivated'])->nullable()->default('activated');
+            $table->enum('account_status',['activated','deactivated'])->nullable()->default('activated');
             $table->boolean('accept_terms')->nullable();
+            $table->string('resume')->nullable();
 
             $table->timestamp('email_verified_at')->nullable();
 
